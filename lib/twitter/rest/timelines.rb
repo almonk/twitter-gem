@@ -25,6 +25,7 @@ module Twitter
       def mentions_timeline(options = {})
         perform_get_with_objects("/1.1/statuses/mentions_timeline.json", options, Twitter::Tweet)
       end
+
       alias mentions mentions_timeline
 
       # Returns the 20 most recent Tweets posted by the specified user
@@ -46,7 +47,7 @@ module Twitter
       #   @option options [Boolean, String, Integer] :contributor_details Specifies that the contributors element should be enhanced to include the screen_name of the contributor.
       #   @option options [Boolean, String, Integer] :include_rts Specifies that the timeline should include native retweets in addition to regular tweets. Note: If you're using the trim_user parameter in conjunction with include_rts, the retweets will no longer contain a full user object.
       def user_timeline(*args)
-        objects_from_response_with_user(Twitter::Tweet, :get, "/1.1/statuses/user_timeline.json", args)
+        objects_from_response_with_user(Twitter::Tweet, :get, "/2.0/statuses/user_timeline.json", args)
       end
 
       # Returns the 20 most recent retweets posted by the specified user
@@ -70,6 +71,7 @@ module Twitter
           user_timeline(user, opts)
         end
       end
+
       alias retweeted_by retweeted_by_user
 
       # Returns the 20 most recent retweets posted by the authenticating user
@@ -151,7 +153,7 @@ module Twitter
         perform_get_with_objects("/1.1/statuses/retweets_of_me.json", options, Twitter::Tweet)
       end
 
-    private
+      private
 
       def retweets_from_timeline(options)
         options[:include_rts] = true
